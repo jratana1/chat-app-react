@@ -1,18 +1,28 @@
 import React, { useEffect, useState, useMemo, Component } from 'react';
+import Header from './components/header'
 import './App.css';
-
+import Landing from './containers/landing'
 import Cable from 'actioncable';
+import { HashRouter, Route, Link } from 'react-router-dom';
+
 
 function App() {
-
+  // const cable = Cable.createConsumer('ws://chat-n-draw.herokuapp.com/cable');
   const cable = Cable.createConsumer('ws://localhost:3000/cable');
-
+  const [isBusy, setBusy] = useState(true)
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
   const [username, setUsername] = useState(""); 
   const [isUsernameConfirmed, setUsernameConfirmed] = useState(false);
   const [mouseDown, setMouseDown] = useState(false)
-
+  
+  useEffect(
+    () => {
+      if (true) {
+        // mutate data if you need to
+        setBusy(false)
+      }
+    }, [])
 
   const chatChannel = useMemo(() => {
     return cable.subscriptions.create(
@@ -71,6 +81,7 @@ function App() {
   const handleHover = (e) => {
     if (mouseDown ===true){
       e.target.style.backgroundColor="white"
+      chatChannel.draw(e.target.id.split("-")[1]);
     }
   }
 
@@ -164,6 +175,39 @@ function App() {
     );
 
 }
+
+// const renderLoad = () => {
+//   if (isBusy) {
+//     return <div>Loading</div>;
+//   } else {
+//     return (
+//       <>
+//         <div >
+//           <ul className="Navbar">
+//             <li className="Nav-Item"><Link to="/">Home</Link></li> 
+//             <li className="Nav-Item"><Link to="/cards">Chat-N-Draw</Link></li>
+//           </ul>
+//         </div>
+//         <Header/>
+//         <Route exact path="/" >
+//           <Landing />
+//         </Route>
+//         <Route exact path="/play" >
+//           <CardFilter props={players}/>
+//         </Route>
+//       </>
+//     )
+//   }
+// }
+
+// return (
+// <HashRouter basename='/'>
+//   <div className="App">
+//         {renderLoad()}      
+//   </div>
+// </HashRouter>
+// );
+// }
 
 export default App;
 
