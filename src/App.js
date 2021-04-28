@@ -20,15 +20,24 @@ function App() {
       ,  {
       connected: () => {},
       received: (data) => {
-        setChat(oldArray => [...oldArray, data])
+        if (data.action === "chat") {
+          setChat(oldArray => [...oldArray, data])
+        }
+        if (data.action === "draw") {
+          document.getElementById(`cell-${data.cell}`).style.backgroundColor="white"
+        }
       },
       create: function(chatContent, username) {
         this.perform('create', {
           content: chatContent,
           username: username
         });
+      },
+      draw: function(cell) {
+        this.perform('draw', {
+          cell: cell,
+        });
       }
-      // draw: callback
       // word:
     });
   }, []);
@@ -39,7 +48,6 @@ function App() {
     if (!currentMessage || !isUsernameConfirmed) {
       return;
     }
-
     chatChannel.create(currentMessage, username);
     setcurrentMessage(
       ''
@@ -68,6 +76,7 @@ function App() {
 
   const handleClick = (e) => {
     e.target.style.backgroundColor="white"
+    chatChannel.draw(e.target.id.split("-")[1]);
   }
 
   const renderChatLog = () => {
