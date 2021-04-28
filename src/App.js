@@ -20,7 +20,6 @@ function App() {
     () => {
       if (document.getElementsByClassName("listitem").length>0) {
         document.getElementsByClassName("listitem")[document.getElementsByClassName("listitem").length-1].scrollIntoView()
-        // mutate data if you need to
         setBusy(false)
       }
     }, [chat])
@@ -120,6 +119,13 @@ function App() {
     document.getElementById('username-input').disabled= true
   }
 
+  const handleClear = () => {
+    const nodeItems = document.getElementsByClassName("grid-item");
+    for (const c of nodeItems) {
+      c.style= {backgroundColor: `rgb(68, 68, 68)`}
+    }
+  }
+
   const renderLoad = () => {
     if (isBusy) {
       return <div>Loading</div>;
@@ -186,6 +192,11 @@ function App() {
         </div>
         <div className="right-column" style= {{backgroundColor: `rgb(250, 0, 0)`}}>
           <h3>Draw Here</h3>
+          <button
+              onClick={ (e) => handleClear(e) }
+              className='clear'>
+              Clear Canvas
+          </button>
               <div className="grid-container" onMouseDown={ (e) => handleEvent(e) } onMouseUp={ (e) => handleEvent(e) }>
                 {makeGrid(1)}
                 {makeGrid(2)}
