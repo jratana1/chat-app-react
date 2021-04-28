@@ -18,11 +18,12 @@ function App() {
   
   useEffect(
     () => {
-      if (true) {
+      if (document.getElementsByClassName("listitem").length>0) {
+        document.getElementsByClassName("listitem")[document.getElementsByClassName("listitem").length-1].scrollIntoView()
         // mutate data if you need to
         setBusy(false)
       }
-    }, [])
+    }, [chat])
 
   const chatChannel = useMemo(() => {
     return cable.subscriptions.create(
@@ -119,6 +120,29 @@ function App() {
     document.getElementById('username-input').disabled= true
   }
 
+  const renderLoad = () => {
+    if (isBusy) {
+      return <div>Loading</div>;
+    } else {
+      return (
+        <>
+          <div >
+            <ul className="Navbar">
+              <li className="Nav-Item"><Link to="/">Home</Link></li> 
+              <li className="Nav-Item"><Link to="/cards">Chat-N-Draw</Link></li>
+            </ul>
+          </div>
+          <Header/>
+          <Route exact path="/" >
+            <Landing />
+          </Route>
+          <Route exact path="/play" >
+
+          </Route>
+        </>
+      )
+    }
+  }
 
     return (
       <div className='App' >
@@ -176,29 +200,7 @@ function App() {
 
 }
 
-// const renderLoad = () => {
-//   if (isBusy) {
-//     return <div>Loading</div>;
-//   } else {
-//     return (
-//       <>
-//         <div >
-//           <ul className="Navbar">
-//             <li className="Nav-Item"><Link to="/">Home</Link></li> 
-//             <li className="Nav-Item"><Link to="/cards">Chat-N-Draw</Link></li>
-//           </ul>
-//         </div>
-//         <Header/>
-//         <Route exact path="/" >
-//           <Landing />
-//         </Route>
-//         <Route exact path="/play" >
-//           <CardFilter props={players}/>
-//         </Route>
-//       </>
-//     )
-//   }
-// }
+
 
 // return (
 // <HashRouter basename='/'>
