@@ -8,7 +8,10 @@ function App() {
   const cable = Cable.createConsumer('ws://localhost:3000/cable');
 
   const [currentMessage, setcurrentMessage] = useState("")
-  const [chat, setChat] = useState([])  
+  const [chat, setChat] = useState([]) 
+  const [username, setUsername] = useState(""); 
+  const [isUsernameConfirmed, setUsernameConfirmed] = useState(false);
+  const [mouseDown, setMouseDown] = useState(false)
 
 
   const chatChannel = useMemo(() => {
@@ -19,9 +22,10 @@ function App() {
       received: (data) => {
         setChat(oldArray => [...oldArray, data])
       },
-      create: function(chatContent) {
+      create: function(chatContent, username) {
         this.perform('create', {
-          content: chatContent
+          content: chatContent,
+          username: username
         });
       }
       // draw: callback
@@ -31,7 +35,12 @@ function App() {
 
   const handleSendEvent = (event) => {
     event.preventDefault();
-    chatChannel.create(currentMessage);
+
+    if (!currentMessage || !isUsernameConfirmed) {
+      return;
+    }
+
+    chatChannel.create(currentMessage, username);
     setcurrentMessage(
       ''
     );
@@ -47,43 +56,101 @@ function App() {
     }
   }
 
-  const renderChatLog = () => {
-    console.log(chat)
- 
+  const updateUserName = (event) => {
+    setUsername(event.target.value);
+  }
 
+  const handleHover = (e) => {
+    if (mouseDown ===true){
+      e.target.style.backgroundColor="white"
+    }
+  }
+
+  const handleClick = (e) => {
+    e.target.style.backgroundColor="white"
+  }
+
+  const renderChatLog = () => {
     return chat.map((el) => {
       return (
-        <li key={`chat_${el.id}`}>
-          <span className='chat-message'>{ el.content }</span>
+        <li className="listitem" key={`chat_${el.id}`}>
+          <p className='chat-message'>{el.username} : { el.content }</p>
           <span className='chat-created-at'>{ el.created_at }</span>
         </li>
       );
     });
   }
 
+  const makeGrid = (n) => {
+    const N = 2000;
+    const numbers = Array.from({length: N}, (_, index) => index + 1);
+    return numbers.map((i) =>
+      <div key={i} id={`cell-${(n-1)*2000+i}`} className={`grid-item ${(n-1)*2000+i}`} onMouseEnter={(e)=>handleHover(e)} onClick={(e) => handleClick(e)}></div> 
+      );
+  }
+
+  const handleEvent = () => {
+    setMouseDown(!mouseDown)
+  }
+
+  const handleSignIn = (e) => {
+    e.preventDefault()
+    setUsernameConfirmed(true)
+    document.getElementById('username-input').disabled= true
+  }
+
+
     return (
-      <div className='App'>
-        <div className='stage'>
-          <h1>Chat</h1>
-          <div className='chat-logs'>
-              <ul className='chat-logs'>
-                  { renderChatLog() }
-              </ul>
-          </div>
-            <input
-              value={ currentMessage}
-              onKeyPress={ (e) => handleChatInputKeyPress(e) }
-              onChange={ (e) => updateCurrentMessage(e) }
-              type='text'
-              placeholder='Enter your message...'
-              className='chat-input' />
-          <button
-            onClick={ (e) => handleSendEvent(e) }
-            className='send'>
-            Send
-          </button>
-          
+      <div className='App' >
+         <div className="left-column" >
+                    
+            <div className='stage'>
+                    <h1>Chat</h1>
+                    <input
+                        value={ username }
+                        onChange={ (e) => updateUserName(e) }
+                        type='text'
+                        placeholder='Enter Your Username'
+                        className='username-input'
+                        id=  'username-input'
+                        />
+                    <button
+                      onClick={ (e) => handleSignIn(e) }
+                      className='sign-in'>
+                      Sign-In
+                    </button>
+
+                    <div className='chat-logs'>
+                        <ul className='chat-list'>
+                            { renderChatLog() }
+                        </ul>
+                    </div>
+                      <input
+                        value={ currentMessage }
+                        onKeyPress={ (e) => handleChatInputKeyPress(e) }
+                        onChange={ (e) => updateCurrentMessage(e) }
+                        type='text'
+                        placeholder='Enter your message...'
+                        className='chat-input' />
+                    <button
+                      onClick={ (e) => handleSendEvent(e) }
+                      className='send'>
+                      Send
+                    </button>
+                    
+             </div>
         </div>
+        <div className="right-column" style= {{backgroundColor: `rgb(250, 0, 0)`}}>
+          <h3>Draw Here</h3>
+              <div className="grid-container" onMouseDown={ (e) => handleEvent(e) } onMouseUp={ (e) => handleEvent(e) }>
+                {makeGrid(1)}
+                {makeGrid(2)}
+                {makeGrid(3)}
+                {makeGrid(4)}
+                {makeGrid(5)}
+              </div>
+        </div>
+        <div className="clear"></div>
       </div>
     );
 
@@ -91,98 +158,3 @@ function App() {
 
 export default App;
 
-// class App extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       currentChatMessage: '',
-//       chatLogs: []
-//     };
-//   }
-  
-//   updateCurrentChatMessage(event) {
-//     this.setState({
-//       currentChatMessage: event.target.value
-//     });
-//   }
-
-//   createSocket() {
-//     let cable = Cable.createConsumer('ws://localhost:3000/cable');
-//     this.chats = cable.subscriptions.create({
-//       channel: 'ChatChannel'
-//     }, {
-//       connected: () => {},
-//       received: (data) => {
-//         let chatLogs = this.state.chatLogs;
-//         chatLogs.push(data);
-//         this.setState({ chatLogs: chatLogs });
-//       },
-//       create: function(chatContent) {
-//         this.perform('create', {
-//           content: chatContent
-//         });
-//       }
-//     });
-//   }
-
-//   componentDidMount() {
-//     this.createSocket();
-//   }
-
-//   handleSendEvent(event) {
-//     event.preventDefault();
-//     this.chats.create(this.state.currentChatMessage);
-//     this.setState({
-//       currentChatMessage: ''
-//     });
-//   }
-
-
-
-//   handleChatInputKeyPress(event) {
-//     if(event.key === 'Enter') {
-//       this.handleSendEvent(event);
-//     }
-//   }
-
-//   renderChatLog() {
-//     return this.state.chatLogs.map((el) => {
-//       return (
-//         <li key={`chat_${el.id}`}>
-//           <span className='chat-message'>{ el.content }</span>
-//           <span className='chat-created-at'>{ el.created_at }</span>
-//         </li>
-//       );
-//     });
-//   }
-
-//   render() {
-//     return (
-//       <div className='App'>
-//         <div className='stage'>
-//           <h1>Chat</h1>
-//           <div className='chat-logs'>
-//               <ul className='chat-logs'>
-//                   { this.renderChatLog() }
-//               </ul>
-//           </div>
-//             <input
-//               value={ this.state.currentChatMessage }
-//               onKeyPress={ (e) => this.handleChatInputKeyPress(e) }
-//               onChange={ (e) => this.updateCurrentChatMessage(e) }
-//               type='text'
-//               placeholder='Enter your message...'
-//               className='chat-input' />
-//           <button
-//             onClick={ (e) => this.handleSendEvent(e) }
-//             className='send'>
-//             Send
-//           </button>
-          
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// export default App;

@@ -1,13 +1,79 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  width: 100vw
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root{
+  height: 100vh;
+}
+
+.App{
+  height: 100vh;
+  display: flex
+}
+
+.stage{
+  height: 50vw;
+  padding: 30px
+}
+
+.chat-logs{
+  width: 100%;
+  height: 60%;
+  overflow: scroll;
+  background-color: lawngreen;
+  position: relative;
+  margin: 0;
+  border:10px solid #c4c4c4;
+  clear: both;
+}
+
+.chat-list{
+  width: 50%; /* Can be in percentage also. */
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+  display:inline;
+}
+
+.listitem {
+  text-align: left;
+}
+
+.right-column{
+
+  clear: both;
+  height:80%;
+  width: 70%;
+  margin: 30px; 
+  align-items: center;
+  text-align: center;
+
+}
+
+.left-column{
+  background: #f8f8f8 none repeat scroll 0 0;
+  float: left;
+  width: 50%; 
+  
+}
+
+.grid-container{
+  border: 10px solid #c4c4c4;
+  width:500px;
+  height:500px;
+  display: grid;
+  grid-template-columns: repeat(100, [col] 5px ) ;
+  grid-template-rows: repeat(100, [row] 5px  );
+  background-color: #fff;
+  color: #444;
+  margin: 0 auto;
+}
+
+.grid-item {
+  background-color: #444;
+  color: #fff;
+
 }
