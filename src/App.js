@@ -155,7 +155,7 @@ function App() {
          <div className="left-column" >
                     
             <div className='stage'>
-                    <h1>Chat</h1>
+                    <h1>Chat - Hi!</h1>
                     <input
                         value={ username }
                         onChange={ (e) => updateUserName(e) }
