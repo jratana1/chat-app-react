@@ -1,5 +1,6 @@
 import John from '../assets/20200715_112939.jpg'
 import logo from '../logo.svg'
+import './landing.css'
 
 const Team = () => {
     return(
@@ -21,13 +22,9 @@ const Team = () => {
                     <p>React</p>
                 </div>
                 <div className= "Techbox">
-                    <img src='https://camo.githubusercontent.com/973c99d17e4ce72d08c4433449045d8391948711f11ac5f328a585e2a7bc8663/68747470733a2f2f692e696d6775722e636f6d2f515a6f776e68672e706e67' alt="That's ME!" height="200px" width= "200px"/>
-                    <p>React-Spring</p>
+                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Ruby_On_Rails_Logo.svg/1200px-Ruby_On_Rails_Logo.svg.png' alt="That's ME!" height="200px" width= "200px"/>
+                    <p>Ruby On Rails</p>
                 </div>    
-                <div className= "Techbox">
-                    <img src='https://res.cloudinary.com/practicaldev/image/fetch/s--rIjbQB7r--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/organization/profile_image/3943/af485a9e-2bd8-4dbd-97d0-b998e5adcc0c.png' alt="That's ME!" height="200px" width= "200px"/>
-                    <p>StepZen</p>
-                </div>
             </div>
 
     

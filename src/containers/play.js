@@ -121,7 +121,7 @@ function Play() {
   }
 
   return (
-      <>
+      <div className = "play">
        <div className="left-column" >
                   
           <div className='stage'>
@@ -176,7 +176,7 @@ function Play() {
             </div>
       </div>
       <div className="clear"></div>
-      </>
+      </div>
   );
 }
  
