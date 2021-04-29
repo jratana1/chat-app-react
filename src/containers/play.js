@@ -59,16 +59,6 @@ function Play() {
     });
   }, []);
 
-  // const handleSendEvent = (event) => {
-  //   event.preventDefault();
-
-  //   if (!currentMessage || !isUsernameConfirmed) {
-  //     return;
-  //   }
-
-  //   chatChannel.create(currentMessage, username);
-  //   setcurrentMessage('');
-  // }
 
   const handleSendEvent = () => {
         if (!currentMessage || !isUsernameConfirmed) { 
@@ -77,23 +67,10 @@ function Play() {
         setcurrentMessage('');
     }
 
-  // const updateCurrentMessage = (event) => {
-  //   setcurrentMessage(event.target.value);
-  // }
-
-  // const handleChatInputKeyPress = (event) => {
-  //   if(event.key === 'Enter') {
-  //     handleSendEvent(event);
-  //   }
-  // }
-
   const updateUserName = (value) => {
     setUsername(value);
   }
 
-  // const updateUserName = (event) => {
-  //   setUsername(event.target.value);
-  // }
 
   const handleHover = (e) => {
     if (mouseDown ===true){
@@ -107,16 +84,6 @@ function Play() {
     chatChannel.draw(e.target.id.split("-")[1]);
   }
 
-  // const renderChatLog = () => {
-  //   return chat.map((el) => {
-  //     return (
-  //       <li className="listitem" key={`chat_${el.id}`}>
-  //         <p className='chat-message'>{el.username} : { el.content }</p>
-  //         <span className='chat-created-at'>{ el.created_at }</span>
-  //       </li>
-  //     );
-  //   });
-  // }
 
 
   const makeGrid = (n) => {
@@ -131,11 +98,6 @@ function Play() {
     setMouseDown(!mouseDown)
   }
 
-  // const handleSignIn = (e) => {
-  //   e.preventDefault()
-  //   setUsernameConfirmed(true)
-  //   document.getElementById('username-input').disabled= true
-  // }
 
   const handleClear = () => {
     const nodeItems = document.getElementsByClassName("grid-item");
