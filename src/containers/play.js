@@ -39,6 +39,12 @@ function Play() {
         if (data.action === "draw") {
           document.getElementById(`cell-${data.cell}`).style.backgroundColor="white"
         }
+        if (data.action === "clear"){
+            const nodeItems = document.getElementsByClassName("grid-item");
+            for (const c of nodeItems) {
+              c.style= {backgroundColor: `rgb(68, 68, 68)`}
+            }
+        }
       },
       create: function(chatContent, username) {
         this.perform('create', {
@@ -54,6 +60,11 @@ function Play() {
       answer: function(answer) {
           this.perform('answer',{
           answer: answer
+        })
+      },
+      clear: function(){
+          this.perform('clear',{
+            action: "clear"
         })
       }
     });
@@ -100,10 +111,11 @@ function Play() {
 
 
   const handleClear = () => {
-    const nodeItems = document.getElementsByClassName("grid-item");
-    for (const c of nodeItems) {
-      c.style= {backgroundColor: `rgb(68, 68, 68)`}
-    }
+    // const nodeItems = document.getElementsByClassName("grid-item");
+    // for (const c of nodeItems) {
+    //   c.style= {backgroundColor: `rgb(68, 68, 68)`}
+    // }
+    chatChannel.clear()
   }
 
   return (
