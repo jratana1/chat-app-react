@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, Component } from 'react';
+import React, { useState } from 'react';
 import Header from './components/header'
 import './App.css';
 import Landing from './containers/landing'
@@ -18,7 +18,7 @@ function App() {
         <>
           <div >
             <ul className="Navbar">
-              <li className="Nav-Item"><Link to="/">Home</Link></li> 
+              <li className="Nav-Item"><Link to="/">About</Link></li> 
               <li className="Nav-Item"><Link to="/play">Chat-N-Draw</Link></li>
             </ul>
           </div>

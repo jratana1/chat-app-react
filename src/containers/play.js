@@ -1,15 +1,20 @@
 import Cable from 'actioncable';
-import React, { useEffect, useState, useMemo, Component } from 'react';
+
+import React, { useEffect, useState, useMemo } from 'react';
+import Answer from '../components/answer'
+import Winner from '../components/winner'
 import Chat from '../components/chat'
 
+
 function Play() {
-      // const cable = Cable.createConsumer('ws://chat-n-draw.herokuapp.com/cable');
-  const cable = Cable.createConsumer('ws://localhost:3000/cable');
+      const cable = Cable.createConsumer('wss://chat-n-draw.herokuapp.com/cable');
+//   const cable = Cable.createConsumer('ws://localhost:3000/cable');
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
   const [username, setUsername] = useState(""); 
   const [isUsernameConfirmed, setUsernameConfirmed] = useState(false);
   const [mouseDown, setMouseDown] = useState(false)
+  const [winner, setWinner] = useState("")
   
   useEffect(
     () => {
@@ -26,6 +31,10 @@ function Play() {
       received: (data) => {
         if (data.action === "chat") {
           setChat(oldArray => [...oldArray, data])
+          if (data.winner === "true") {
+              setWinner(data.username)
+              document.getElementById("winner").style.visibility = "visible"
+          }
         }
         if (data.action === "draw") {
           document.getElementById(`cell-${data.cell}`).style.backgroundColor="white"
@@ -41,8 +50,12 @@ function Play() {
         this.perform('draw', {
           cell: cell,
         });
+      },
+      answer: function(answer) {
+          this.perform('answer',{
+          answer: answer
+        })
       }
-      // word:
     });
   }, []);
 
@@ -132,7 +145,7 @@ function Play() {
   }
 
   return (
-      <>
+      <div className = "play">
        <div className="left-column" >
           <Chat updateUserName={updateUserName} userConfirmed={(val) => {setUsernameConfirmed(val)}} username={username} chat={chat} isUsernameConfirmed={isUsernameConfirmed} currentMessage={currentMessage} updateCurrentMessage={(val) => {setcurrentMessage(val)}} handleSendEvent={handleSendEvent}/>
       </div>
@@ -151,8 +164,11 @@ function Play() {
               {makeGrid(5)}
             </div>
       </div>
-      <div className="clear"></div>
-      </>
+      <div className="clear">
+          <Answer username= {username} chatChannel={chatChannel} isUsernameConfirmed={isUsernameConfirmed}/>
+          <Winner winner= { winner }/>
+      </div>
+      </div>
   );
 }
  
