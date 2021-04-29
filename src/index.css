@@ -10,7 +10,8 @@ body {
 
 .App{
   height: 100vh;
-  display: flex
+  display: flex;
+
 }
 
 .stage{
@@ -57,7 +58,7 @@ body {
   background: #f8f8f8 none repeat scroll 0 0;
   float: left;
   width: 40%;
-  height: 90%; 
+  height: 80%; 
   
 }
 

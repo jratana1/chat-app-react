@@ -3,7 +3,8 @@
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    padding: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
 
 }
 

@@ -20,9 +20,9 @@ function App() {
             <ul className="Navbar">
               <li className="Nav-Item"><Link to="/">About</Link></li> 
               <li className="Nav-Item"><Link to="/play">Chat-N-Draw</Link></li>
+              <Header/>
             </ul>
           </div>
-          <Header/>
           <Route exact path="/" >
             <Landing />
           </Route>
