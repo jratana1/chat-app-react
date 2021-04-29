@@ -39,15 +39,8 @@ const About = () => {
     return (
         <div className = "About">
             <p>
-                MLB Showdown is a collectible trading card game.  Card stats are linked directly to the real life perfomance of the
-                ahtletes.  Collect them all, form your custom roster, and play against other people.  You players will get better (or worse)
-                as the season progresses. Trade with other players and make your best team.
-            </p>
-            <p>
-                Click on "Cards" in the navigation bar to explore the full library of cards.
-            </p>
-            <p>
-                Click on "Roster" to buy card packs and make your team.
+                Chat-N-Draw is a drawing game.  Join the room and log-in to chat.  Choose a drawer.  The drawer submits an answer on the top right input, then start drawing.
+                Everyone in the room can see and guess the image in the chat.  First person to guess correctly wins (winner declared on the top right).
             </p>
         </div>
     )
