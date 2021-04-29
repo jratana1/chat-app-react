@@ -1,6 +1,8 @@
 import Cable from 'actioncable';
 import React, { useEffect, useState, useMemo } from 'react';
 import Answer from '../components/answer'
+import Winner from '../components/winner'
+
 
 
 function Play() {
@@ -11,6 +13,7 @@ function Play() {
   const [username, setUsername] = useState(""); 
   const [isUsernameConfirmed, setUsernameConfirmed] = useState(false);
   const [mouseDown, setMouseDown] = useState(false)
+  const [winner, setWinner] = useState("")
   
   useEffect(
     () => {
@@ -28,7 +31,8 @@ function Play() {
         if (data.action === "chat") {
           setChat(oldArray => [...oldArray, data])
           if (data.winner === "true") {
-              alert(`you win, ${data.username}!`)
+              setWinner(data.username)
+              document.getElementById("winner").style.visibility = "visible"
           }
         }
         if (data.action === "draw") {
@@ -185,6 +189,7 @@ function Play() {
       </div>
       <div className="clear">
           <Answer username= {username} chatChannel={chatChannel} isUsernameConfirmed={isUsernameConfirmed}/>
+          <Winner winner= { winner }/>
       </div>
       </div>
   );

@@ -19,6 +19,7 @@ function Answer(props) {
         // if (!input || !props.isUsernameConfirmed) {
         //   return;
         // }
+        document.getElementById("winner").style.visibility = "hidden"
         props.chatChannel.answer(input);
         setInput(
           ''
