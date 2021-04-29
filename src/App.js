@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, Component } from 'react';
+import React, { useState } from 'react';
 import Header from './components/header'
 import './App.css';
 import Landing from './containers/landing'

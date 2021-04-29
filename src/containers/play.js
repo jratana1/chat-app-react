@@ -1,5 +1,6 @@
 import Cable from 'actioncable';
-import React, { useEffect, useState, useMemo, Component } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import Answer from '../components/answer'
 
 
 function Play() {
@@ -41,8 +42,12 @@ function Play() {
         this.perform('draw', {
           cell: cell,
         });
+      },
+      word: function(answer) {
+          this.perform('answer',{
+          answer: answer
+        })
       }
-      // word:
     });
   }, []);
 
@@ -175,7 +180,9 @@ function Play() {
               {makeGrid(5)}
             </div>
       </div>
-      <div className="clear"></div>
+      <div className="clear">
+          <Answer username= {username} chatChannel={chatChannel} isUsernameConfirmed={isUsernameConfirmed}/>
+      </div>
       </div>
   );
 }
