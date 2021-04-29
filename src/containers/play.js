@@ -6,8 +6,8 @@ import Winner from '../components/winner'
 
 
 function Play() {
-      // const cable = Cable.createConsumer('ws://chat-n-draw.herokuapp.com/cable');
-  const cable = Cable.createConsumer('ws://localhost:3000/cable');
+      const cable = Cable.createConsumer('ws://chat-n-draw.herokuapp.com/cable');
+//   const cable = Cable.createConsumer('ws://localhost:3000/cable');
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
   const [username, setUsername] = useState(""); 
