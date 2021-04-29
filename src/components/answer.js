@@ -15,11 +15,11 @@ function Answer(props) {
 
     const handleSendEvent = (event) => {
         event.preventDefault();
-    
-        if (!input || !props.isUsernameConfirmed) {
-          return;
-        }
-        props.chatChannel.draw(input);
+ 
+        // if (!input || !props.isUsernameConfirmed) {
+        //   return;
+        // }
+        props.chatChannel.answer(input);
         setInput(
           ''
         );

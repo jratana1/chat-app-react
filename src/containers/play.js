@@ -43,7 +43,7 @@ function Play() {
           cell: cell,
         });
       },
-      word: function(answer) {
+      answer: function(answer) {
           this.perform('answer',{
           answer: answer
         })
