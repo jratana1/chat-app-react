@@ -27,6 +27,9 @@ function Play() {
       received: (data) => {
         if (data.action === "chat") {
           setChat(oldArray => [...oldArray, data])
+          if (data.winner === "true") {
+              alert(`you win, ${data.username}!`)
+          }
         }
         if (data.action === "draw") {
           document.getElementById(`cell-${data.cell}`).style.backgroundColor="white"
