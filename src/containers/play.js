@@ -1,6 +1,6 @@
 import Cable from 'actioncable';
 import React, { useEffect, useState, useMemo, Component } from 'react';
-
+import Chat from '../components/chat'
 
 function Play() {
       // const cable = Cable.createConsumer('ws://chat-n-draw.herokuapp.com/cable');
@@ -46,31 +46,41 @@ function Play() {
     });
   }, []);
 
-  const handleSendEvent = (event) => {
-    event.preventDefault();
+  // const handleSendEvent = (event) => {
+  //   event.preventDefault();
 
-    if (!currentMessage || !isUsernameConfirmed) {
-      return;
+  //   if (!currentMessage || !isUsernameConfirmed) {
+  //     return;
+  //   }
+
+  //   chatChannel.create(currentMessage, username);
+  //   setcurrentMessage('');
+  // }
+
+  const handleSendEvent = () => {
+        if (!currentMessage || !isUsernameConfirmed) { 
+          return }
+        chatChannel.create(currentMessage, username);
+        setcurrentMessage('');
     }
-    chatChannel.create(currentMessage, username);
-    setcurrentMessage(
-      ''
-    );
+
+  // const updateCurrentMessage = (event) => {
+  //   setcurrentMessage(event.target.value);
+  // }
+
+  // const handleChatInputKeyPress = (event) => {
+  //   if(event.key === 'Enter') {
+  //     handleSendEvent(event);
+  //   }
+  // }
+
+  const updateUserName = (value) => {
+    setUsername(value);
   }
 
-  const updateCurrentMessage = (event) => {
-    setcurrentMessage(event.target.value);
-  }
-
-  const handleChatInputKeyPress = (event) => {
-    if(event.key === 'Enter') {
-      handleSendEvent(event);
-    }
-  }
-
-  const updateUserName = (event) => {
-    setUsername(event.target.value);
-  }
+  // const updateUserName = (event) => {
+  //   setUsername(event.target.value);
+  // }
 
   const handleHover = (e) => {
     if (mouseDown ===true){
@@ -84,16 +94,17 @@ function Play() {
     chatChannel.draw(e.target.id.split("-")[1]);
   }
 
-  const renderChatLog = () => {
-    return chat.map((el) => {
-      return (
-        <li className="listitem" key={`chat_${el.id}`}>
-          <p className='chat-message'>{el.username} : { el.content }</p>
-          <span className='chat-created-at'>{ el.created_at }</span>
-        </li>
-      );
-    });
-  }
+  // const renderChatLog = () => {
+  //   return chat.map((el) => {
+  //     return (
+  //       <li className="listitem" key={`chat_${el.id}`}>
+  //         <p className='chat-message'>{el.username} : { el.content }</p>
+  //         <span className='chat-created-at'>{ el.created_at }</span>
+  //       </li>
+  //     );
+  //   });
+  // }
+
 
   const makeGrid = (n) => {
     const N = 2000;
@@ -107,11 +118,11 @@ function Play() {
     setMouseDown(!mouseDown)
   }
 
-  const handleSignIn = (e) => {
-    e.preventDefault()
-    setUsernameConfirmed(true)
-    document.getElementById('username-input').disabled= true
-  }
+  // const handleSignIn = (e) => {
+  //   e.preventDefault()
+  //   setUsernameConfirmed(true)
+  //   document.getElementById('username-input').disabled= true
+  // }
 
   const handleClear = () => {
     const nodeItems = document.getElementsByClassName("grid-item");
@@ -123,42 +134,7 @@ function Play() {
   return (
       <>
        <div className="left-column" >
-                  
-          <div className='stage'>
-                  <h1>Chat - Hi!</h1>
-                  <input
-                      value={ username }
-                      onChange={ (e) => updateUserName(e) }
-                      type='text'
-                      placeholder='Enter Your Username'
-                      className='username-input'
-                      id=  'username-input'
-                      />
-                  <button
-                    onClick={ (e) => handleSignIn(e) }
-                    className='sign-in'>
-                    Sign-In
-                  </button>
-
-                  <div className='chat-logs'>
-                      <ul className='chat-list'>
-                          { renderChatLog() }
-                      </ul>
-                  </div>
-                    <input
-                      value={ currentMessage }
-                      onKeyPress={ (e) => handleChatInputKeyPress(e) }
-                      onChange={ (e) => updateCurrentMessage(e) }
-                      type='text'
-                      placeholder='Enter your message...'
-                      className='chat-input' />
-                  <button
-                    onClick={ (e) => handleSendEvent(e) }
-                    className='send'>
-                    Send
-                  </button>
-                  
-           </div>
+          <Chat updateUserName={updateUserName} userConfirmed={(val) => {setUsernameConfirmed(val)}} username={username} chat={chat} isUsernameConfirmed={isUsernameConfirmed} currentMessage={currentMessage} updateCurrentMessage={(val) => {setcurrentMessage(val)}} handleSendEvent={handleSendEvent}/>
       </div>
       <div className="right-column" style= {{backgroundColor: `rgb(250, 0, 0)`}}>
         <h3>Draw Here</h3>
