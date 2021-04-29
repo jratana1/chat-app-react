@@ -19,7 +19,7 @@ function Play() {
   useEffect(
     () => {
       if (document.getElementsByClassName("listitem").length>0) {
-        document.getElementsByClassName("listitem")[document.getElementsByClassName("listitem").length-1].scrollIntoView()
+        document.getElementsByClassName("listitem")[document.getElementsByClassName("listitem").length-1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
       }
     }, [chat])
 
