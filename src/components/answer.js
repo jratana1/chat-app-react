@@ -16,10 +16,10 @@ function Answer(props) {
     const handleSendEvent = (event) => {
         event.preventDefault();
  
-        // if (!input || !props.isUsernameConfirmed) {
-        //   return;
-        // }
-        document.getElementById("winner").style.visibility = "hidden"
+        if (!input || !props.isUsernameConfirmed) {
+          return;
+        }
+        props.setWinner("")
         props.chatChannel.answer(input);
         setInput(
           ''

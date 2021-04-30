@@ -7,8 +7,8 @@ import Chat from '../components/chat'
 
 
 function Play() {
-      const cable = Cable.createConsumer('wss://chat-n-draw.herokuapp.com/cable');
-//   const cable = Cable.createConsumer('ws://localhost:3000/cable');
+    //   const cable = Cable.createConsumer('wss://chat-n-draw.herokuapp.com/cable');
+  const cable = Cable.createConsumer('ws://localhost:3000/cable');
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
   const [username, setUsername] = useState(""); 
@@ -33,7 +33,7 @@ function Play() {
           setChat(oldArray => [...oldArray, data])
           if (data.winner === "true") {
               setWinner(data.username)
-              document.getElementById("winner").style.visibility = "visible"
+            //   document.getElementById("winner").style.visibility = "visible"
           }
         }
         if (data.action === "draw") {
@@ -85,13 +85,11 @@ function Play() {
 
   const handleHover = (e) => {
     if (mouseDown ===true){
-      e.target.style.backgroundColor="white"
       chatChannel.draw(e.target.id.split("-")[1]);
     }
   }
 
   const handleClick = (e) => {
-    e.target.style.backgroundColor="white"
     chatChannel.draw(e.target.id.split("-")[1]);
   }
 
@@ -139,8 +137,8 @@ function Play() {
             </div>
       </div>
       <div className="clear">
-          <Answer username= {username} chatChannel={chatChannel} isUsernameConfirmed={isUsernameConfirmed}/>
-          <Winner winner= { winner }/>
+          <Answer username= {username} chatChannel={chatChannel} setWinner= {setWinner} isUsernameConfirmed={isUsernameConfirmed}/>
+          { winner ? <Winner winner= { winner }/> : null }
       </div>
       </div>
   );
